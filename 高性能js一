@@ -1,0 +1,19 @@
+js在浏览器中的性能，大多数浏览器使用单进程处理UI更新和js运行等多个任务，而同一时间只能执行一个任务，js运行多久，那么在浏览器空闲下来响应用户用户输入之前的等待时间就要多久
+
+方法将js变迁放在尽可能接近body变迁底部的位置
+
+减少http的请求，可以将多个js文件整合到一起
+
+动态创建js
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'testJs1.js';
+    var head = document.getElementsByTagName('head')[0];
+    head.appendChild(script);
+    src='testJs1.js' 
+    script.onload = function() {
+      alert('script loaded');/*当此js包含其它脚本需要调用的接口时，可能会出错
+Firefox,opera,chrome和safari3+在<script>节点接收完成后会发出一个load时间*/
+    }
+
+
