@@ -40,3 +40,22 @@ IE下确保js加载完成：
       script.onreadystatechange = null;
       alert("Script loaded.");
       }
+封装动态加载js（ie及非ie下）的方法：
+      function loadScript(url, callback){
+      var script = document.createElement ("script")
+      script.type = "text/javascript";
+      if (script.readyState){ //IE
+      script.onreadystatechange = function(){
+      if (script.readyState == "loaded" || script.readyState == "complete"){
+      script.onreadystatechange = null;
+      callback();
+      }
+      };
+      } else { //Others
+      script.onload = function(){
+      callback();
+      };
+      }
+      script.src = url;
+      document.getElementsByTagName_r("head")[0].appendChild(script);
+      }
