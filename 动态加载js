@@ -30,4 +30,13 @@ $(document).ready(function() {
 });  
    
 </script>  
-
+非IE下确保异步的js已经加载完成：
+      script.onload = function(){
+      alert("Script loaded!");
+      };
+IE下确保js加载完成：
+      script.onreadystatechange = function(){
+      if (script.readyState == "loaded" || script.readyState == "complete"){
+      script.onreadystatechange = null;
+      alert("Script loaded.");
+      }
