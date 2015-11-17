@@ -1,0 +1,38 @@
+直接量和局部变量的访问，比数组和对象成员快
+
+运行函数时建立一个内部对象，称作“运行期上下文”，它定义了函数运行时的环境，函数的每次运行，每个运行期上下文都是独一的，所以多次
+调用一个函数会多次创建运行期上下文，当函数执行完毕，运行期上下问就被销毁了
+函数中局部变量访问的速度是最快的，而全局视同慢的通常
+则优化前（）：
+    function initUI(){
+    var bd = document.body,
+    links = document.getElementsByTagName_r("a"),
+    i = 0,
+    len = links.length;
+    while(i < len){
+    update(links[i++]);
+    }
+    document.getElementById("go-btn").onclick = function(){
+    start();
+    };
+    bd.className = "active";
+    }
+优化后（因为document是全局的变量）：
+    function initUI(){
+    var doc = document,
+    bd = doc.body,
+    links = doc.getElementsByTagName_r("a"),
+    i = 0,
+    len = links.length;
+    while(i < len){
+    update(links[i++]);
+    }
+    doc.getElementById("go-btn").onclick = function(){
+    start();
+    };
+    bd.className = "active";
+    }
+    
+    with会使得运行期上下文作用域链被临时改变，导致函数的所有局部变量被推入到第二个作用于链对象中
+    
+    try catch的catch也会破坏原先的作用域链
