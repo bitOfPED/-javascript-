@@ -1,0 +1,33 @@
+<script type="text/javascript">  
+   
+    var oHead = document.getElementsByTagName('HEAD').item(0);   
+   
+    var oScript= document.createElement("script");   
+   
+    oScript.type = "text/javascript";   
+   
+    oScript.src="test.js";   
+   
+    oHead.appendChild( oScript);   
+   
+</script>   
+分析：、异步的、兼容性良好（测试了多版本IE、FF、Chrome），其他不多说，强烈推荐。
+
+<script type="text/javascript" src="jquery.js">
+   
+<script type="text/javascript">  
+   
+$(document).ready(function() {  
+      
+    //async为false的时候是同步的  
+    //dataType为script的时候已经帮你把返回结果用script类型的dom元素添加到文档中了，如果跨域，POST会转换为GET  
+    $.ajax({  
+    type: 'GET',  
+    url:'test.js',  
+    async:false,  
+    dataType,'script'})  
+     
+});  
+   
+</script>  
+
