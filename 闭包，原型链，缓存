@@ -1,0 +1,29 @@
+使用闭包，导致内存泄漏
+
+深入原型链越深，运行效率越低
+
+成员嵌套越深，访问速度越慢 location.href 快于window.location.href
+
+性能问题回合对象成员有关，如果可以，劲量少的访问对象成员：
+    function hasEitherClass(element, className1, className2){
+      return element.className == className1 || element.className == className2;
+    }//需要访问搜索两次element.className
+    
+    function hasEitherClass(element, className1, className2){
+      var elem = element.className;//缓存好了以后只需要访问一次的element.className
+      return elem == className1 || elem == className2;
+    }
+    
+   var obj = {a: 1, b: 2};
+   function b () {
+   	 var a = 0;
+   	 for(var i=0;i<100000000;i++){
+   	 	obj.a++;
+   	 }
+   	 a = obj.a
+     console.log(a);
+   }//这样的运行事件是300ms-320ms,如果将obj.a先缓存好，则运行时间是：180ms-200ms
+   （不过我这里，发现主要原因还是，obj.a是全局的缘故，而先缓存要多次操作的全局变量速度明显快很多）
+一般，同一个函数中需要读取同一个对象属性，最好将它存入一个局部变量。以局部变量替代属性
+避免多余的属性查找带来性能开销。在处理嵌套对象成员时这点特别重要
+
